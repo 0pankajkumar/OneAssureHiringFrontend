@@ -27,16 +27,24 @@ function getTotalPremium(data) {
   return ans;
 }
 
-// Simple component that gets the
-// headers and then the rows
-export default function makeTable(data) {
+export default function makeTable(data, cartValue, setCartValue) {
+  let totalPremium = getTotalPremium(data);
   return (
     <>
       <table>
         <tr>{getHeadings(data)}</tr>
         {getRows(data)}
       </table>
-      <section>Total premium : {getTotalPremium(data)}</section>
+      <section>
+        Total premium : {totalPremium} <br />
+        <button
+          onClick={() => {
+            setCartValue(cartValue + totalPremium);
+          }}
+        >
+          Add to cart
+        </button>
+      </section>
     </>
   );
 }

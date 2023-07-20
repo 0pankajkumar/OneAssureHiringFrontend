@@ -2,7 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import makeTable from "./makeTable";
 
-export default function PremiumFom() {
+export default function PremiumFom({ cartValue, setCartValue }) {
   const [sumInsured, setSumInsured] = useState(300000);
   const [tierID, setTierID] = useState(1);
   const [tenure, setTenure] = useState(1);
@@ -34,7 +34,7 @@ export default function PremiumFom() {
         if (resJson.length === 0) {
           setMessage("Some error in input");
         } else {
-          setMessage(makeTable(resJson));
+          setMessage(makeTable(resJson, cartValue, setCartValue));
         }
       } else {
         setMessage("Some error occured");

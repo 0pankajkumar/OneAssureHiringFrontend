@@ -1,7 +1,13 @@
-.App {
+.AppForm {
   display: flex;
   justify-content: center;
   margin-top: 5rem;
+}
+
+.AppCartValue {
+  display: flex;
+  justify-content: flex-end;
+  margin: 8px;
 }
 
 .message {

@@ -1,12 +1,26 @@
-import logo from "./logo.svg";
+import { useState } from "react";
 import "./App.css";
-import PremiumFom from "./PremiumFom";
+import Premium from "./Premium";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Checkout from "./Checkout";
 
 function App() {
+  const [cartValue, setCartValue] = useState(0);
   return (
-    <div className="App">
-      <PremiumFom />
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            index
+            path="/"
+            element={
+              <Premium cartValue={cartValue} setCartValue={setCartValue} />
+            }
+          />
+          <Route path="checkout" element={<Checkout cartValue={cartValue} />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
