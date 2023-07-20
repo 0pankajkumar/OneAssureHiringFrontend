@@ -17,7 +17,7 @@ function App() {
               <Premium cartValue={cartValue} setCartValue={setCartValue} />
             }
           />
-          <Route path="checkout" element={<Checkout cartValue={cartValue} />} />
+          <Route path="checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     </>
