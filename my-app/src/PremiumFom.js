@@ -24,15 +24,19 @@ export default function PremiumFom({ cartValue, setCartValue }) {
           Ages: ages,
         }),
       });
-      let resJson = await res.json();
+
       if (res.status === 200) {
         setSumInsured(300000);
         setTierID(1);
         setTenure(1);
         setAges([0]);
 
-        if (resJson.length === 0) {
+        let resJson = await res.json();
+
+        if (res.length === 0) {
           setMessage("Some error in input");
+        } else if (resJson.hasOwnProperty("errorMsg")) {
+          setMessage(resJson.errorMsg);
         } else {
           setMessage(makeTable(resJson, cartValue, setCartValue));
         }
