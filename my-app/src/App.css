@@ -7,5 +7,20 @@
 .message {
   font-size: 1.2em;
   text-align: center;
-  color: #36a936;
+}
+
+table {
+  border: 1px solid #dfdfdf;
+  border-collapse: collapse;
+}
+th {
+  background-color: #efefef;
+  text-align: left;
+}
+td {
+  border: 1px solid #efefef;
+}
+td,
+th {
+  padding: 0.4em;
 }

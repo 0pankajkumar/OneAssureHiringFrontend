@@ -1,18 +1,22 @@
 import "./App.css";
 import { useState } from "react";
+import makeTable from "./makeTable";
 
 export default function PremiumFom() {
   const [sumInsured, setSumInsured] = useState(300000);
   const [tierID, setTierID] = useState(1);
   const [tenure, setTenure] = useState(1);
-  const [ages, setAges] = useState([1]);
+  const [ages, setAges] = useState([0]);
   const [message, setMessage] = useState("");
 
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await fetch("https://httpbin.org/post", {
+      let res = await fetch("https://oneassure-hiring.onrender.com/rates", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           SumInsured: sumInsured,
           TierID: tierID,
@@ -22,11 +26,16 @@ export default function PremiumFom() {
       });
       let resJson = await res.json();
       if (res.status === 200) {
-        setSumInsured("");
-        setTierID("");
-        setTenure("");
-        setAges([]);
-        setMessage("User created successfully");
+        setSumInsured(300000);
+        setTierID(1);
+        setTenure(1);
+        setAges([0]);
+
+        if (resJson.length === 0) {
+          setMessage("Some error in input");
+        } else {
+          setMessage(makeTable(resJson));
+        }
       } else {
         setMessage("Some error occured");
       }
@@ -37,7 +46,7 @@ export default function PremiumFom() {
 
   function handleAgeInput(i, e) {
     let newAges = [...ages];
-    newAges[newAges.length - 1] = parseInt(e.target.value);
+    newAges[newAges.length - 1] = parseInt(e.target.value) || 0;
     setAges(newAges);
   }
 
@@ -59,7 +68,7 @@ export default function PremiumFom() {
           <select
             name="sumInsured"
             defaultValue="300000"
-            onChange={(e) => setSumInsured(e.target.value)}
+            onChange={(e) => setSumInsured(parseInt(e.target.value))}
           >
             <option value="300000">300000</option>
             <option value="400000">400000</option>
@@ -98,10 +107,11 @@ export default function PremiumFom() {
         {ages.map((element, index) => (
           <div className="form-inline" key={index}>
             <label>Age</label>
+
             <input
               type="text"
               name="age"
-              value={element || ""}
+              value={element >= 0 ? element : ""}
               onChange={(e) => handleAgeInput(index, e)}
             />
             {index ? (
@@ -128,7 +138,9 @@ export default function PremiumFom() {
           </button>
         </div>
 
-        <div className="message">{message ? <p>{message}</p> : null}</div>
+        <div className="message">
+          {message ? <section>{message}</section> : null}
+        </div>
       </form>
     </div>
   );
